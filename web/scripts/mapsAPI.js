@@ -35,6 +35,19 @@ function getLocation(location){
     service.findPlaceFromQuery(request, insert_meetup);   
 }
 
-function getAllMeetups(){
-
+function getAllMeetups(map){
+    var leadsRef = firebase.database().ref('meetups');
+    var objs = []
+    var group =  new H.map.Group(objs);
+    leadsRef.on('value', function(snapshot) {
+        console.log(snapshot);    
+        snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            console.log(childData);
+            var marker = new H.map.Marker({lat: childData.latitude, lng: childData.longitude});
+            objs.push(marker);
+        });
+    map.addObject(group.addObjects(objs));
+    return group;
+    });
 }

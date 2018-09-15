@@ -20,6 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <script src="scripts/mapsAPI.js" type="text/javascript"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -46,9 +47,13 @@
   </div>
 </nav>
 <div style="width: 100%; height: 900px;" id="mapContainer"></div>
-
+<script src="/__/firebase/5.5.0/firebase-app.js"></script>
+<script src="/__/firebase/5.5.0/firebase-auth.js"></script>
+<script src="/__/firebase/5.5.0/firebase-database.js"></script>
+<script src="/__/firebase/5.5.0/firebase-storage.js"></script>
+<script src="/__/firebase/5.5.0/firebase-messaging.js"></script>
+<script src="/__/firebase/init.js"></script>
     <script>
-
         function getShortestRoute(o, d){
             var origin = o;
             var dest = d;
@@ -60,18 +65,9 @@
         }   
 
         // Instantiate (and display) a map object:
-
+        var group = null;
         function addMarkersAndSetViewBounds() {
-            // create map objects
-            var toronto = new H.map.Marker({lat: 43.7, lng: -79.4}),
-                boston = new H.map.Marker({lat: 42.35805, lng: -71.0636}),
-                washington = new H.map.Marker({lat: 38.8951, lng: -77.0366}),
-                group = new H.map.Group();
-
-            // add markers to the group
-            group.addObjects([toronto, boston, washington]);
-            map.addObject(group);
-            
+            console.log(group)
             // get geo bounding box for the group and set it to the map
             map.setViewBounds(group.getBounds());
         }
@@ -93,8 +89,8 @@
                 zoom: 5,
                 pixelRatio: pixelRatio
             });
-
-
+        group = getAllMeetups(map);
+        
         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
         addMarkersAndSetViewBounds(map);
 
