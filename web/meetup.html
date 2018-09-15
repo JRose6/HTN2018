@@ -1,75 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Hack The North 2018</title>
     <meta name="viewport" content="initial-scale=1.0,
-    width=device-width"/>
+    width=device-width" />
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1533195059" />
+
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="http://js.api.here.com/v3/3.0/mapsjs-clustering.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <!--<link rel="stylesheet" href="{% static 'build/css/main.css' %}">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <script src="scripts/mapsAPI.js" type="text/javascript"></script>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Hack The North 2018</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+        <a class="navbar-brand" href="#">Hack The North 2018</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="meetup.html">Meetups</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="chat.html">Chat</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Donate</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-<div style="width: 100%; height: 900px;" id="mapContainer"></div>
-<script src="/__/firebase/5.5.0/firebase-app.js"></script>
-<script src="/__/firebase/5.5.0/firebase-auth.js"></script>
-<script src="/__/firebase/5.5.0/firebase-database.js"></script>
-<script src="/__/firebase/5.5.0/firebase-storage.js"></script>
-<script src="/__/firebase/5.5.0/firebase-messaging.js"></script>
-<script src="/__/firebase/init.js"></script>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="meetup.html">Meetups</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="chat.html">Chat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Donate</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div style="width: 100%; height: 900px;" id="mapContainer"></div>
+    <div id="modal-info" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p><b>Organizer: </b><span id="organizer"></span></p>
+                    <p><b>Name: </b><span id="event"></span></p>
+                    <p><b>Address: </b><span id="address"></span></p>
+                    <p><b>Date: </b><span id="dateof"></span></p>
+                    <p><b>Time: </b><span id="time"></span></p></p>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+    <script src="/__/firebase/5.5.0/firebase-app.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-auth.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-database.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-storage.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-messaging.js"></script>
+    <script src="/__/firebase/init.js"></script>
     <script>
-        function getShortestRoute(o, d){
+        function getShortestRoute(o, d) {
             var origin = o;
             var dest = d;
             var apikey = "AIzaSyBZbBxoI3QSdk7LGcJc9BGazii8BA5mQbM";
-            var url ='https://maps.googleapis.com/maps/api/directions/json?origin='+origin+'&destination='+dest+'&key='+apikey; 
-            $.get(url, function(data){
+            var url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + origin + '&destination=' + dest + '&key=' + apikey;
+            $.get(url, function (data) {
                 console.log(data);
             })
-        }   
+        }
 
         // Instantiate (and display) a map object:
         var group = null;
         function addMarkersAndSetViewBounds() {
-            console.log(group)
+            group = getAllMeetups(map);
             // get geo bounding box for the group and set it to the map
-            map.setViewBounds(group.getBounds());
+            //map.setViewBounds(group.getBounds());
         }
 
 
@@ -85,17 +108,18 @@
         });
         var map = new H.Map(document.getElementById('mapContainer'),
             defaultLayers.normal.map, {
-                center: {lat: 52, lng: 5},
+                center: { lat: 52, lng: 5 },
                 zoom: 5,
                 pixelRatio: pixelRatio
             });
-        group = getAllMeetups(map);
-        
+
         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
         addMarkersAndSetViewBounds(map);
 
     </script>
-<script>
-</script>
+    <script>
+
+    </script>
 </body>
+
 </html>

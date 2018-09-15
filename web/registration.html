@@ -1,0 +1,112 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hack The North 2018</title>
+    <meta name="viewport" content="initial-scale=1.0,
+            width=device-width" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="{% static 'build/css/main.css' %}">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Hack The North 2018</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="meetup.html">Meetups</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="chat.html">Chat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="donate.html">Donate</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h4 class="text-center">Register</h4>
+                <p style="color:red;" id="error-message"></p>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="servicenumber">Service Number</label>
+                    <input type="text" name="servicenumber" id="servicenumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="identification">Government Issued Photo ID</label>
+                    <input type="file" name="identification" id="identification" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="type">What are you looking for?</label>
+                    <select class="form form-control" id="type" name="type">
+                        <option value="provide_support">Provide Support</option>
+                        <option value="need_support">Need Support</option>
+                    </select>
+                </div>
+                <button id="btnSubmit" class="btn btn-success btn-lg">Submit</button>
+            </div>
+        </div>
+    </div>
+    <script src="/__/firebase/5.5.0/firebase-app.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-auth.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-database.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-storage.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-messaging.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <script>
+        $(function () {
+            $("#btnSubmit").click(function () {
+                var email = $("#email").val();
+                var password = $("#password").val();
+                var user = firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
+                    var user = firebase.auth().currentUser;
+                    var j = {
+                        'email': user.email,
+                        'service_id': $("#servicenumber").val(),
+                        'photo_id': $("#identification").val(),
+                        'username': $("#username").val(),
+                        'type': $("#type").val()
+                    }
+                    try {
+                        firebase.database().ref('/user_information/').push(j);
+                        console.log(j);
+                    }
+                    catch (exception) {
+                        $("#error-message").html(exception.message);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

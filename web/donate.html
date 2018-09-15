@@ -1,5 +1,6 @@
 <html>
     <head>
+        <title>Donate</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
             crossorigin="anonymous">
         <!--<link rel="stylesheet" href="{% static 'build/css/main.css' %}">-->
@@ -20,7 +21,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Login</a>
+                                <a class="nav-link" href="login.html">Login</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="meetup.html">Meetups</a>
@@ -34,28 +35,12 @@
                         </ul>
                     </div>
                 </nav>
-                <button id="btn-go" class="btn btn-success btn-large" value=""></button>
-        <!-- Import and configure the Firebase SDK -->
-<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
-<!-- If you do not want to serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-<script src="/__/firebase/5.5.0/firebase-app.js"></script>
-<script src="/__/firebase/5.5.0/firebase-auth.js"></script>
-<script src="/__/firebase/5.5.0/firebase-database.js"></script>
-<script src="/__/firebase/5.5.0/firebase-storage.js"></script>
-<script src="/__/firebase/5.5.0/firebase-messaging.js"></script>
-<script src="/__/firebase/init.js"></script>
-<script>
-    $(function(){
-        console.log(firebase.auth().currentUser);
-        if (!firebase.auth().currentUser){
-            //window.location.replace("login.html");
-        }
-        else{
-        }
-        $("#btn-go").click(function(){
-            console.log(firebase.auth().currentUser);
-        });
-    });
-</script>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <h4 class="text-center">If you would like to continue to support this application you can donate Ethereum to: 0xf6ead068f4a15a66d087e82f22677b5d59760857</p>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
