@@ -19,18 +19,17 @@ $("#submit").click(function(){
   saveMessage();
 });
 
-// Initiate firebase auth.
-function initFirebaseAuth() {
-  // Listen to auth state changes.
-  firebase.auth().onAuthStateChanged(authStateObserver);
-}
-
 // Loads chat messages history and listens for upcoming ones.
 function loadMessages() {
+  console.log("Loading Messages");
   // Loads the last 12 messages and listen for new ones.
   var callback = function(snap) {
     var data = snap.val();
-    displayMessage(snap.key, data.email, data.text);
+    console.log(snap.key);
+    console.log(getConversationId());
+    if (data.convoid==getConversationId()){
+      displayMessage(snap.key, data.email, data.text);
+    }
   };
 
   firebase.database().ref('/messages/').limitToLast(100).on('child_added', callback);
@@ -39,8 +38,9 @@ function loadMessages() {
 
 // Saves a new message on the Firebase DB.
 function saveMessage() {
+  console.log("Save message")
   // Add a new message entry to the Firebase database.
-  
+
   //Add message to file
   var file = new File(messages_to_be_analyzed.txt);
   var str = $("#message").val();
@@ -104,16 +104,19 @@ function displayMessage(key, name, text) {
     messageElement.textContent = text;
     // Replace all line breaks by <br>.
     messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
-    if (name==firebase.database().currentUser){
-      messageElement.style.textAlign = 'right';
-    }
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user && name == user.email) {
+        console.log("My message")
+        container.classList.add('my-message');
+      }
+  });
+
   }
   // Show the card fading-in and scroll to view the new message.
   setTimeout(function() {div.classList.add('visible')}, 1);
   messageListElement.scrollTop = messageListElement.scrollHeight;
   messageInputElement.focus();
 }
-
 // We load currently existing chat messages and listen to new ones.
 loadMessages();
 var messageListElement = document.getElementById('messages');

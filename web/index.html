@@ -39,7 +39,6 @@
     <div class="row justify-content-center">
         <button id="btn-go" class="btn btn-success btn-large" value="">Queue Up</button>
         <h4 id="message" id="queue-message" style="display: none;">Waiting in Queue...</p>
-
     </div>
     <!-- Import and configure the Firebase SDK -->
     <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
@@ -112,7 +111,7 @@
 
             let newItems = false
 
-            firebase.database().ref().child('conversation').on('child_added', snapshot => {
+            firebase.database().ref().child('conversation').limitToLast(1).on('child_added', snapshot => {
                 if (!newItems) { return }
                 console.log(snapshot.val());
                 console.log(snapshot.key);
