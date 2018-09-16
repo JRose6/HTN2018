@@ -98,8 +98,12 @@ function displayMessage(key, name, text) {
     messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
     firebase.auth().onAuthStateChanged(function (user) {
       if (user && name == user.email) {
-        console.log("My message")
-        container.classList.add('my-message');
+        console.log("My message");
+        console.log(container);
+        div.classList.add('my-message');
+      }
+      else{
+        div.classList.add('their-message');
       }
   });
   
