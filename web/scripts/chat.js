@@ -17,6 +17,7 @@ var messageListElement = $("#messages-card-container");
 
 $("#submit").click(function(){
   saveMessage();
+  $("#message").val("");
 });
 
 // Loads chat messages history and listens for upcoming ones.
@@ -41,12 +42,6 @@ function saveMessage() {
   console.log("Save message")
   // Add a new message entry to the Firebase database.
 
-  //Add message to file
-  var file = new File(messages_to_be_analyzed.txt);
-  var str = $("#message").val();
-  file.open("w"); // open file with write access
-  file.writeln(str);
-  file.close();
 
   return firebase.database().ref('/messages/').push({
     convoid: getConversationId(),
