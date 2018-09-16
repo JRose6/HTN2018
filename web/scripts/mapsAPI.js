@@ -13,7 +13,7 @@ function insert_meetup(data) {
         date_of_meetup: $("#dateof").val(),
         start_time: $("#starttime").val(),
         end_time: $("#endtime").val(),
-        organizer: 'Jordan Rose\'s Charity of Awesome'
+        organizer: 'Veteran\'s Charity'
     };
     firebase.database().ref('meetups/' + firebase.database().ref().child('meetup').push().key).set(j);
     console.log(j);
