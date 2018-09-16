@@ -22,21 +22,21 @@
     padding-bottom: 0;
   }
   #messages-card-container {
+    background: white;
     height: calc(100% - 35px);
-    width: 800px;
-    margin: auto;
+    width: 100%;
+    margin: 0;
     padding-bottom: 0;
   }
   #messages-card {
     margin-top: 15px;
-    width: 800px;
+    width:100%;
   }
   .mdl-layout__header-row span {
     margin-left: 15px;
     margin-top: 17px;
   }
   .mdl-grid {
-    max-width: 1024px;
     margin: auto;
   }
   .material-icons {
@@ -69,6 +69,8 @@
   }
   .message-container {
     display: block;
+    width:100%;
+
     margin-top: 10px;
     border-top: 1px solid #f3f3f3;
     padding-top: 10px;
@@ -78,16 +80,8 @@
   .message-container.visible {
     opacity: 1;
   }
-  .message-container .pic {
-    background-image: url('/images/profile_placeholder.png');
-    background-repeat: no-repeat;
-    width: 30px;
-    height: 30px;
-    background-size: 30px;
-    border-radius: 20px;
-  }
   .message-container .spacing {
-    display: table-cell;
+    display: block;
     vertical-align: top;
   }
   .message-container .message {
@@ -107,7 +101,7 @@
   #message-form {
     display: flex;
     flex-direction: row;
-    width: calc(100% - 48px);
+    width: 100%;
     float: left;
   }
   #image-form {
@@ -116,8 +110,8 @@
     width: 48px;
     float: right;
   }
-  #message-form .mdl-textfield {
-    width: calc(100% - 100px);
+  #message-form .mdl-textfid {
+    width: 100%;
   }
   #message-form button, #image-form button {
     width: 100px;
@@ -214,5 +208,11 @@
   .mdl-button .material-icons {
     top: -1px;
     margin-right: 5px;
+    
   }
-  
+  .mdl-textfield__input{
+    width:80%;
+  }
+  .my-message{
+    text-align: right;
+  }
