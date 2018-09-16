@@ -91,7 +91,15 @@
             // get geo bounding box for the group and set it to the map
             //map.setViewBounds(group.getBounds());
         }
+        firebase.auth().onAuthStateChanged(function (user) {
+                console.log(user);
+                if (user) {
+                    console.log("Here 1");
 
+                } else {
+                    window.location.replace("login.html");
+                }
+            });
 
         var platform = new H.service.Platform({
             'app_id': 'lwLjtkhzR98eUIXpnCAi',
