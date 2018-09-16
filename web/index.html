@@ -36,8 +36,11 @@
             </ul>
         </div>
     </nav>
-    <button id="btn-go" class="btn btn-success btn-large" value="">Queue Up</button>
-    <p id="message" id="queue-message">Waiting in Queue...</p>
+    <div class="row justify-content-center">
+        <button id="btn-go" class="btn btn-success btn-large" value="">Queue Up</button>
+        <h4 id="message" id="queue-message" style="display: none;">Waiting in Queue...</p>
+
+    </div>
     <!-- Import and configure the Firebase SDK -->
     <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
     <!-- If you do not want to serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
@@ -49,68 +52,64 @@
     <script src="/__/firebase/init.js"></script>
     <script>
         $(function () {
-            $("#btn-go").click(function(){
+            $("#message").hide();
+            $("#btn-go").click(function () {
+                $("#btn-go").hide();
+                $("#message").show();
                 var user = firebase.auth().currentUser;
                 console.log(user.email);
-                    firebase.database().ref('/user_information/').orderByChild('email').equalTo(user.email).on("value", function (snapshot) {
-                        console.log(snapshot.val());
-                        snapshot.forEach(function (data) {
-                            console.log(data);
-                            var val = snapshot[data.key];
-                            var email = snapshot.val()[data.key].email;
-                            var type = snapshot.val()[data.key].type;
+                firebase.database().ref('/user_information/').orderByChild('email').equalTo(user.email).on("value", function (snapshot) {
+                    console.log(snapshot.val());
+                    snapshot.forEach(function (data) {
+                        console.log(data);
+                        var val = snapshot[data.key];
+                        var email = snapshot.val()[data.key].email;
+                        var type = snapshot.val()[data.key].type;
 
-                            firebase.database().ref('/message_queue/').orderByChild('datetime').once('value').then(function (snapshot2) {
-                                //Appending to queue
-                                console.log(snapshot2.val());
-                                var email1 = "";
-                                var type2 = "";
-                                snapshot2.forEach(function (data) {
-                                    email1 = snapshot2.val()[data.key].email;
-                                    type2 = snapshot2.val()[data.key].type;
-                                });
-                                if (!snapshot2.val() || type2 == type) {
-                                    var j = { 'email': email, 'type': type, 'datetime': new Date() }
-
-                                    console.log("Inserting");
-                                    console.log(j);
-                                    var key = firebase.database().ref().child('message_queue').push(j).key;
-                                    console.log(key);
-                                    firebase.database().ref('/message_queue/' + key).set(j);
-                                }
-                                else {//remove from queue
-                                    console.log("Removing");
-
-                                    var j = { 'email1': email1, 'email2': email, 'datetime': Date.now() };
-                                    console.log(j);
-                                    var k = firebase.database().ref().child('conversation').push(j).key;
-                                    firebase.database().ref('/conversation/' + k).set(j);
-                                    snapshot2.ref.remove();
-                                }
-
+                        firebase.database().ref('/message_queue/').orderByChild('datetime').once('value').then(function (snapshot2) {
+                            //Appending to queue
+                            console.log(snapshot2.val());
+                            var email1 = "";
+                            var type2 = "";
+                            snapshot2.forEach(function (data) {
+                                email1 = snapshot2.val()[data.key].email;
+                                type2 = snapshot2.val()[data.key].type;
                             });
+                            if (!snapshot2.val() || type2 == type) {
+                                var j = { 'email': email, 'type': type, 'datetime': new Date() }
 
+                                console.log("Inserting");
+                                console.log(j);
+                                var key = firebase.database().ref().child('message_queue').push(j).key;
+                                console.log(key);
+                                firebase.database().ref('/message_queue/' + key).set(j);
+                            }
+                            else {//remove from queue
+                                console.log("Removing");
+
+                                var j = { 'email1': email1, 'email2': email, 'datetime': Date.now() };
+                                console.log(j);
+                                var k = firebase.database().ref().child('conversation').push(j).key;
+                                firebase.database().ref('/conversation/' + k).set(j);
+                                snapshot2.ref.remove();
+                            }
 
                         });
+
+
                     });
+                });
             });
             firebase.auth().onAuthStateChanged(function (user) {
                 console.log(user);
                 if (user) {
                     console.log("Here 1");
-                    
+
                 } else {
                     window.location.replace("login.html");
                 }
             });
-           /* firebase.database().ref("/conversation/").limitToLast(1).on('child_added', function (snapshot) {
-                console.log(snapshot.val());
-                var user_email = firebase.auth().currentUser.email;
-                if (user_email == snapshot.val().email1 || user_email == snapshot.val().email2) {
-                    window.location.replace("chat.html");
-                }
 
-            });*/
             let newItems = false
 
             firebase.database().ref().child('conversation').on('child_added', snapshot => {
@@ -118,7 +117,7 @@
                 console.log(snapshot.val());
                 console.log(snapshot.key);
                 alert();
-                window.location.replace("chat.html?id="+snapshot.key);
+                window.location.replace("chat.html?id=" + snapshot.key);
             })
 
             firebase.database().ref().child('conversation').once('value', () => {
@@ -128,14 +127,7 @@
                 console.log(firebase.auth().currentUser);
             });
         });
-<<<<<<< HEAD
     </script>
 </body>
 
 </html>
-=======
-    });
-</script>
-    </body>
-</html>
->>>>>>> bdcf467b7736d34df6dc1eda0cc017f575110fc7

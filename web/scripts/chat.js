@@ -30,7 +30,7 @@ function loadMessages() {
   // Loads the last 12 messages and listen for new ones.
   var callback = function(snap) {
     var data = snap.val();
-    displayMessage(snap.key, data.name, data.text);
+    displayMessage(snap.key, data.email, data.text);
   };
 
   firebase.database().ref('/messages/').limitToLast(100).on('child_added', callback);
@@ -75,9 +75,8 @@ function resetMaterialTextfield(element) {
 // Template for messages.
 var MESSAGE_TEMPLATE =
     '<div class="message-container">' +
-      '<div class="spacing"><div class="pic"></div></div>' +
+      '<div class="spacing"></div>' +
       '<div class="message"></div>' +
-      '<div class="name"></div>' +
     '</div>';
 
 
@@ -92,12 +91,14 @@ function displayMessage(key, name, text) {
     div.setAttribute('id', key);
     messageListElement.appendChild(div);
   }
-  div.querySelector('.name').textContent = name;
   var messageElement = div.querySelector('.message');
   if (text) { // If the message is text.
     messageElement.textContent = text;
     // Replace all line breaks by <br>.
     messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
+    if (name==firebase.database().currentUser){
+      messageElement.style.textAlign = 'right';
+    }
   } 
   // Show the card fading-in and scroll to view the new message.
   setTimeout(function() {div.classList.add('visible')}, 1);
