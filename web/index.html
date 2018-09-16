@@ -1,61 +1,134 @@
 <html>
-    <head>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous">
-        <!--<link rel="stylesheet" href="{% static 'build/css/main.css' %}">-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    </head>
-    <body>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand" href="#">Hack The North 2018</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-            
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="meetup.html">Meetups</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="chat.html">Chat</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="donate.html">Donate</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                <button id="btn-go" class="btn btn-success btn-large" value=""></button>
-        <!-- Import and configure the Firebase SDK -->
-<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
-<!-- If you do not want to serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-<script src="/__/firebase/5.5.0/firebase-app.js"></script>
-<script src="/__/firebase/5.5.0/firebase-auth.js"></script>
-<script src="/__/firebase/5.5.0/firebase-database.js"></script>
-<script src="/__/firebase/5.5.0/firebase-storage.js"></script>
-<script src="/__/firebase/5.5.0/firebase-messaging.js"></script>
-<script src="/__/firebase/init.js"></script>
-<script>
-    $(function(){
-        console.log(firebase.auth().currentUser);
-        if (!firebase.auth().currentUser){
-            //window.location.replace("login.html");
-        }
-        else{
-        }
-        $("#btn-go").click(function(){
-            console.log(firebase.auth().currentUser);
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="{% static 'build/css/main.css' %}">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Hack The North 2018</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="meetup.html">Meetups</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="chat.html">Chat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="donate.html">Donate</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <button id="btn-go" class="btn btn-success btn-large" value="">Queue Up</button>
+    <p id="message" id="queue-message">Waiting in Queue...</p>
+    <!-- Import and configure the Firebase SDK -->
+    <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+    <!-- If you do not want to serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+    <script src="/__/firebase/5.5.0/firebase-app.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-auth.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-database.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-storage.js"></script>
+    <script src="/__/firebase/5.5.0/firebase-messaging.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <script>
+        $(function () {
+            $("#btn-go").click(function(){
+                var user = firebase.auth().currentUser;
+                console.log(user.email);
+                    firebase.database().ref('/user_information/').orderByChild('email').equalTo(user.email).on("value", function (snapshot) {
+                        console.log(snapshot.val());
+                        snapshot.forEach(function (data) {
+                            console.log(data);
+                            var val = snapshot[data.key];
+                            var email = snapshot.val()[data.key].email;
+                            var type = snapshot.val()[data.key].type;
+
+                            firebase.database().ref('/message_queue/').orderByChild('datetime').once('value').then(function (snapshot2) {
+                                //Appending to queue
+                                console.log(snapshot2.val());
+                                var email1 = "";
+                                var type2 = "";
+                                snapshot2.forEach(function (data) {
+                                    email1 = snapshot2.val()[data.key].email;
+                                    type2 = snapshot2.val()[data.key].type;
+                                });
+                                if (!snapshot2.val() || type2 == type) {
+                                    var j = { 'email': email, 'type': type, 'datetime': new Date() }
+
+                                    console.log("Inserting");
+                                    console.log(j);
+                                    var key = firebase.database().ref().child('message_queue').push(j).key;
+                                    console.log(key);
+                                    firebase.database().ref('/message_queue/' + key).set(j);
+                                }
+                                else {//remove from queue
+                                    console.log("Removing");
+
+                                    var j = { 'email1': email1, 'email2': email, 'datetime': Date.now() };
+                                    console.log(j);
+                                    var k = firebase.database().ref().child('conversation').push(j).key;
+                                    firebase.database().ref('/conversation/' + k).set(j);
+                                    snapshot2.ref.remove();
+                                }
+
+                            });
+
+
+                        });
+                    });
+            });
+            firebase.auth().onAuthStateChanged(function (user) {
+                console.log(user);
+                if (user) {
+                    console.log("Here 1");
+                    
+                } else {
+                    window.location.replace("login.html");
+                }
+            });
+           /* firebase.database().ref("/conversation/").limitToLast(1).on('child_added', function (snapshot) {
+                console.log(snapshot.val());
+                var user_email = firebase.auth().currentUser.email;
+                if (user_email == snapshot.val().email1 || user_email == snapshot.val().email2) {
+                    window.location.replace("chat.html");
+                }
+
+            });*/
+            let newItems = false
+
+            firebase.database().ref().child('conversation').on('child_added', snapshot => {
+                if (!newItems) { return }
+                console.log(snapshot.val());
+                console.log(snapshot.key);
+                alert();
+                window.location.replace("chat.html?id="+snapshot.key);
+            })
+
+            firebase.database().ref().child('conversation').once('value', () => {
+                newItems = true;
+            })
+            $("#btn-go").click(function () {
+                console.log(firebase.auth().currentUser);
+            });
         });
-    });
-</script>
-    </body>
+    </script>
+</body>
+
 </html>
