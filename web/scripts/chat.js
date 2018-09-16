@@ -40,8 +40,16 @@ function loadMessages() {
 // Saves a new message on the Firebase DB.
 function saveMessage() {
   // Add a new message entry to the Firebase database.
+  
+  //Add message to file
+  var file = new File(messages_to_be_analyzed.txt);
+  var str = $("#message").val();
+  file.open("w"); // open file with write access
+  file.writeln(str);
+  file.close();
+
   return firebase.database().ref('/messages/').push({
-    convoid: getConversationId(), 
+    convoid: getConversationId(),
     email: firebase.auth().currentUser.email,
     text: $("#message").val(),
   }).catch(function(error) {
@@ -99,7 +107,7 @@ function displayMessage(key, name, text) {
     if (name==firebase.database().currentUser){
       messageElement.style.textAlign = 'right';
     }
-  } 
+  }
   // Show the card fading-in and scroll to view the new message.
   setTimeout(function() {div.classList.add('visible')}, 1);
   messageListElement.scrollTop = messageListElement.scrollHeight;
