@@ -13,7 +13,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Hack The North 2018</a>
+        <a class="navbar-brand" href="index.html">Hack The North 2018</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -22,13 +22,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="login.html">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="meetup.html">Meetups</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="chat.html">Chat</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="donate.html">Donate</a>
@@ -115,7 +112,6 @@
                 if (!newItems) { return }
                 console.log(snapshot.val());
                 console.log(snapshot.key);
-                alert();
                 window.location.replace("chat.html?id=" + snapshot.key);
             })
 
