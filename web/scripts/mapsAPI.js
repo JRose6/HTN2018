@@ -67,11 +67,11 @@ function getAllMeetups(map) {
             console.log(data);
             $("#modal-info").modal();
 
-            $("#organizers").html(data.organizer?data.organizer:"");
+            $("#organizer").html(data.organizer?data.organizer:"");
             $("#event").html(data.name?data.name:"");
-            $("#address").html(data.address?data.address:"");
+            $("#address").html(data.location?data.location:"");
             $("#dateof").html(data.date_of_meetup?data.date_of_meetup:"");
-            $("#time").html(data.start_time?data.start_time:"" + " to " + data.end_time?data.end_time:"");
+            $("#time").html((data.start_time?data.start_time:"") + " to " + (data.end_time?data.end_time:""));
         }, false);
         map.addLayer(clusteringLayer);
     });
