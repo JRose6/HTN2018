@@ -41,8 +41,6 @@ function loadMessages() {
 function saveMessage() {
   console.log("Save message")
   // Add a new message entry to the Firebase database.
-
-
   return firebase.database().ref('/messages/').push({
     convoid: getConversationId(),
     email: firebase.auth().currentUser.email,
@@ -51,6 +49,7 @@ function saveMessage() {
     console.error('Error writing new message to Firebase Database', error);
   });
 }
+
 function getConversationId(){
   var url_string = window.location.href;
   var url = new URL(url_string);
