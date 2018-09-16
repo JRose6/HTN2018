@@ -40,14 +40,6 @@ function loadMessages() {
 function saveMessage() {
   console.log("Save message")
   // Add a new message entry to the Firebase database.
-
-  //Add message to file
-  var file = new File(messages_to_be_analyzed.txt);
-  var str = $("#message").val();
-  file.open("w"); // open file with write access
-  file.writeln(str);
-  file.close();
-
   return firebase.database().ref('/messages/').push({
     convoid: getConversationId(),
     email: firebase.auth().currentUser.email,
@@ -56,6 +48,7 @@ function saveMessage() {
     console.error('Error writing new message to Firebase Database', error);
   });
 }
+
 function getConversationId(){
   var url_string = window.location.href;
   var url = new URL(url_string);
